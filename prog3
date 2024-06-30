@@ -1,20 +1,36 @@
 import pandas as pd
 import numpy as np
-data = pd.read_csv('lab1.csv')
-concepts = np.array(data)[:,:-1]
-target = np.array(data)[:,-1]
-def train(con,tar):
-    for i,val in enumerate(tar):
-        if val=='yes':
-            specific_h = con[i].copy()
-            break
-            
-    for i,val in enumerate(con):
-        if tar[i]=='yes':
-            for x in range(len(specific_h)):
-                if val[x] != specific_h[x]:
-                    specific_h[x] = '?'
-                else:
-                    pass
-    return specific_h
-print(train(concepts,target))
+df2 = pd.read_csv('lab3.csv')
+print(df2)
+print("\nThe most general hypothesis: ['?', '?', '?', '?', '?', '?']\n")
+print("\nThe most specific hypothesis: ['0', '0', '0', '0', '0', '0']\n")
+
+
+X = np.array(df2.iloc[:, :-1])  
+y = np.array(df2.iloc[:, -1])   
+
+print("\nFeatures (X):\n", X)
+print("\nTarget (y):\n", y)
+
+m, n = X.shape
+print("\nNumber of rows (m) and columns (n):", m, n)
+
+
+print("\nThe initial value of hypothesis:")
+hypothesis = ['0'] * n
+print(hypothesis)
+
+
+print("\nFind S: Finding a Maximally Specific Hypothesis\n")
+for i in range(m):
+    if y[i] == 'Yes':  
+        for j in range(n):
+            if hypothesis[j] == '0':
+                hypothesis[j] = X[i, j]
+            elif X[i, j] != hypothesis[j]:
+                hypothesis[j] = '?'
+    print(f"the hypothesis for training set {i + 1}: {hypothesis}")
+
+print("\nThe Maximally Specific Hypothesis for the given Training Examples:\n")
+print(hypothesis)
+
