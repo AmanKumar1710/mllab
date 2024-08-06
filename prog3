@@ -25,11 +25,12 @@ print("\nFind S: Finding a Maximally Specific Hypothesis\n")
 for i in range(m):
     if y[i] == 'Yes':  
         for j in range(n):
-            if hypothesis[j] == '0':
-                hypothesis[j] = X[i, j]
-            elif X[i, j] != hypothesis[j]:
-                hypothesis[j] = '?'
-    print(f"the hypothesis for training set {i + 1}: {hypothesis}")
+            if X[i][j] != hypothesis[j]:
+                if hypothesis[j] == '0':
+                    hypothesis[j] = X[i][j]
+                else:
+                    hypothesis[j] = '?'
+    print(f"the hypothesis for training example {i + 1}: {hypothesis}")
 
 print("\nThe Maximally Specific Hypothesis for the given Training Examples:\n")
 print(hypothesis)
